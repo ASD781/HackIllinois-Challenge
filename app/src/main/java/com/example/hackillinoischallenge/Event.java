@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 
 public class Event {
@@ -26,6 +27,19 @@ public class Event {
 
         startDate = new Date(start);
         endDate = new Date(end);
+    }
+
+    public String toString() {
+        return "Event{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", sponsor='" + sponsor + '\'' +
+                ", eventType='" + eventType + '\'' +
+                ", locations=" + locations +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                '}';
     }
 
     public String getId() {
