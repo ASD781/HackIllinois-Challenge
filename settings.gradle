@@ -1,0 +1,2 @@
+rootProject.name='HackIllinois Challenge'
+include ':app'
