@@ -4,7 +4,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Date;
 
 public class Event {
@@ -12,6 +11,7 @@ public class Event {
     private String id, name, description, sponsor, eventType;
     private ArrayList<String> locations;
     private Date startDate, endDate;
+    private boolean interested;
 
     public Event(String id, String name, String description, String sponsor, String eventType, JSONArray locations, long start, long end) throws JSONException {
         this.id = id;
@@ -27,6 +27,8 @@ public class Event {
 
         startDate = new Date(start);
         endDate = new Date(end);
+
+        interested = false;
     }
 
     public String toString() {
@@ -39,6 +41,7 @@ public class Event {
                 ", locations=" + locations +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
+                ", interested=" + interested +
                 '}';
     }
 
@@ -104,5 +107,13 @@ public class Event {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public boolean isInterested() {
+        return interested;
+    }
+
+    public void setInterested(boolean interested) {
+        this.interested = interested;
     }
 }

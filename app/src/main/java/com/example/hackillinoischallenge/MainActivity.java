@@ -1,23 +1,16 @@
 package com.example.hackillinoischallenge;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.RequestFuture;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -25,11 +18,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
-import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,12 +39,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
 
+        // Set up RecyclerView
         rv = findViewById(R.id.id_rv);
         rv.setHasFixedSize(true);
 
         layoutManager = new LinearLayoutManager(this);
         rv.setLayoutManager(layoutManager);
 
+        //API call
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, apiUrl,
                 new Response.Listener<String>() {
@@ -75,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         queue.add(stringRequest);
     }
 
+    // Parse JSON, populate eventList, and populate RecyclerView
     public void setup() {
         try {
             JSONObject jsonObject = new JSONObject(jsonString);
@@ -88,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
                         current.getString("description"), current.getString("sponsor"), current.getString("eventType"),
                         current.getJSONArray("locations"), current.getLong("startTime")*1000, current.getLong("endTime")*1000));
             }
-            // Log.d("TAG", eventList.toString());
             Collections.sort(eventList, new EventComparator());
             Log.d("TAG", eventList.toString());
 
@@ -96,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        adapter = new CustomAdapter(eventList);
+        adapter = new CustomAdapter(eventList, MainActivity.this);
         rv.setAdapter(adapter);
     }
 }
